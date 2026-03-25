@@ -2,8 +2,10 @@
 
 public class BedroomModule : StationModule
 {
-    public BedroomModule(int id, string name) : base(id, name)
+    public int capacity;
+    public BedroomModule(int id, string name, int capacity) : base(id, name)
     {
         Module = ModulesEnum.BEDROOM;
+        this.capacity = capacity;
     }
 }
