@@ -31,11 +31,12 @@ StationModule power = new PowerModule(id.Next(1000), "power");
 StationModule oxygen = new OxygenModule(id.Next(1000), "oxygen");
 StationModule bedroom = new BedroomModule(id.Next(1000), "bedroom", 50);
 
-Zone zona = new Zone();
+Zone zona = new Zone(id.Next(1000), "Z01");
 
 zona.AddModule(power);
 zona.AddModule(oxygen);
 zona.AddModule(bedroom);
 
+Console.WriteLine(zona);
 Console.WriteLine(zona.IsOperational);
 Console.WriteLine(zona.Capacity);

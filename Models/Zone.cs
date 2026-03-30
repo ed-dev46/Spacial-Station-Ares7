@@ -2,13 +2,24 @@
 
 public class Zone
 {
+
+    public int Id { get; }
+    public string Name { get; }
     List<StationModule> modules = new List<StationModule>();
     public bool IsOperational => 
         modules.Any(m => m.Module == ModulesEnum.OXYGEN) && 
         modules.Any(m => m.Module == ModulesEnum.POWER);
+
     private int maxModulesLimit = 4;
     public int Capacity => modules.OfType<BedroomModule>()
                             .Sum(m => m.capacity);
+    public int EnergyLevel { get; private set; } = 0;
+
+    public Zone(int id, string name)
+    {
+        Id = id;
+        Name = name;
+    }
 
     public void AddModule(StationModule module)
     {
@@ -18,6 +29,34 @@ public class Zone
         }
 
         modules.Add(module);
+    }
+
+    public void ChargeEnergyLevel()
+    {
+        if (modules.Any(m => m.Module == ModulesEnum.POWER))
+        {
+            EnergyLevel = 100;
+        } else
+        {
+            throw new MissingMemberException("The zone does not have a Power Module to Charge Up.");
+        }
+    }
+
+    public override string ToString()
+    {
+        string str = $"| {Name} | {Id} | {EnergyLevel}% \n";
+        if (!modules.Any())
+        {
+            str += "The zone is empty of modules.";
+        } else
+        {
+            foreach(var module in modules)
+            {
+               str += $"{module}\n";
+            }
+        }
+        str += "\n-------------------------";
+        return str;
     }
 }
 /*
